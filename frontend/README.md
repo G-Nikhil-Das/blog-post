@@ -68,3 +68,25 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+Material UI :
+https://mui.com/material-ui/getting-started/
+To install material UI : 
+npm install @mui/material @emotion/react @emotion/styled
+
+Tailwind : 
+https://tailwindcss.com/docs
+To install Tailwind : 
+npm install -D tailwindcss
+npx tailwindcss init
+
+React-Redux
+https://react-redux.js.org/
+To install :
+npm install react-redux
+
+React-router-dom :
+https://www.npmjs.com/package/react-router-dom
+To install :
+npm i react-router-dom
