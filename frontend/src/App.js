@@ -8,12 +8,13 @@ import Login from "./components/Login";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Register from "./components/Register";
 // import { authActions } from "./store";
 function App() {
   // const dispath = useDispatch();
 
   // const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   console.log(isLoggedIn);
   // useEffect(() => {
   //   if (localStorage.getItem("userId")) {
@@ -30,6 +31,7 @@ function App() {
           {!isLoggedIn ? (
             <>
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/" element={<AllBlogs />} />
             </>
           ) : (
@@ -38,7 +40,8 @@ function App() {
               <Route path="/blogs/add" element={<AddBlog />} />
               <Route path="/myBlogs" element={<MyBlogs />} />
               <Route path="/myBlogs/:id" element={<BlogDetails />} />
-              <Route path="/login" element={<Login />} />
+              {/* <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} /> */}
               <Route path="/" element={<AllBlogs />} />{" "}
             </>
           )}

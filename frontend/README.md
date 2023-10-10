@@ -90,3 +90,13 @@ React-router-dom :
 https://www.npmjs.com/package/react-router-dom
 To install :
 npm i react-router-dom
+
+Formik :
+https://formik.org/docs/overview
+To install :
+npm i formik
+
+Yup :
+https://www.npmjs.com/package/yup
+To install :
+npm i yup
