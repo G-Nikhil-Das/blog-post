@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from 'react-router-dom';
+// import axios from 'axios';
 
 // Creating schema
 const schema = Yup.object().shape({
@@ -17,8 +18,21 @@ const schema = Yup.object().shape({
 });
 
 const Register = () => {
-    const onSubmitHandler = (values) => {
+    async function onSubmitHandler(values) {
         console.log(values)
+        const {email, password} = values
+        console.log(JSON.stringify({email, password}))
+        await fetch('http://localhost:5000/register', {
+            method: 'POST',
+            body: JSON.stringify({email, password}),
+            headers: {'Content-Type':'application/json'}
+        })
+        // await axios.post("http://localhost:5000/register",JSON.stringify({email, password}))
+        // .then(function (response) {
+        //     console.log(response);
+        //   })
+        // const response = await axios.post("http://localhost:5000/register",JSON.stringify({email, password}))
+        // console.log(response)
     }
 
     return (

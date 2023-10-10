@@ -61,7 +61,6 @@ const Header = () => {
                 onClick={()=>{setIsLoggedIn(true)}} //Mock line
                 LinkComponent={Link}
                 to="/login"
-                // to="/blogs" //mockline
                 variant="contained"
                 sx={{ margin: 1, borderRadius: 10 }}
                 className="bg-neutral-950"
@@ -71,8 +70,7 @@ const Header = () => {
               <Button
                 onClick={()=>{setIsLoggedIn(true)}} //Mock line
                 LinkComponent={Link}
-                // to="/login"
-                to="/blogs" //mockline
+                to="/register"
                 variant="contained"
                 sx={{ margin: 1, borderRadius: 10 }}
                 className="bg-neutral-950"

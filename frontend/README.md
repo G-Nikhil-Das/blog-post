@@ -100,3 +100,8 @@ Yup :
 https://www.npmjs.com/package/yup
 To install :
 npm i yup
+
+Axios :
+https://www.npmjs.com/package/axios
+To install : 
+npm i axios
