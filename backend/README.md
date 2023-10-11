@@ -17,3 +17,13 @@ Mongoose :
 https://www.npmjs.com/package/mongoose
 To install :
 npm i mongoose
+
+bcryptjs :
+https://www.npmjs.com/package/bcryptjs
+To install :
+npm i bcryptjs
+
+JWT :
+https://www.npmjs.com/package/jsonwebtoken
+To install : 
+npm i jsonwebtoken

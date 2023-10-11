@@ -1,11 +1,13 @@
 import React from 'react'
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 
 // Creating schema
 const schema = Yup.object().shape({
+    name: Yup.string()
+      .required("Name is a required field"),
     email: Yup.string()
       .required("Email is a required field")
       .email("Invalid email format"),
@@ -18,21 +20,27 @@ const schema = Yup.object().shape({
 });
 
 const Register = () => {
+    const navigate = useNavigate();
     async function onSubmitHandler(values) {
         console.log(values)
-        const {email, password} = values
-        console.log(JSON.stringify({email, password}))
-        await fetch('http://localhost:5000/register', {
+        const {name, email, password} = values
+        console.log(JSON.stringify({name, email, password}))
+        const response = await fetch('http://localhost:5000/user/register', {
             method: 'POST',
-            body: JSON.stringify({email, password}),
+            body: JSON.stringify({name, email, password}),
             headers: {'Content-Type':'application/json'}
         })
-        // await axios.post("http://localhost:5000/register",JSON.stringify({email, password}))
+        // await axios.post("http://localhost:5000/user/register",JSON.stringify({email, password}))
         // .then(function (response) {
         //     console.log(response);
         //   })
-        // const response = await axios.post("http://localhost:5000/register",JSON.stringify({email, password}))
+        // const response = await axios.post("http://localhost:5000/user/register",JSON.stringify({email, password}))
         // console.log(response)
+        if(response.status === 200) {
+            navigate("/login")
+        } else {
+            alert('Registration failed.')
+        }
     }
 
     return (
@@ -40,7 +48,7 @@ const Register = () => {
         {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
         <Formik
             validationSchema={schema}
-            initialValues={{ email: "", password: "", confirmPassword: "" }}
+            initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
             onSubmit={(values) => {
                 onSubmitHandler(values)
             }}
@@ -60,6 +68,26 @@ const Register = () => {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" noValidate onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
+                            <div className="mt-2">
+                                <input
+                                    type="text"
+                                    name="name"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.name}
+                                    placeholder="Enter full name"
+                                    className="form-control inp_text block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    id="name"
+                                />
+                                {/* If validation is not passed show errors */}
+                                <p className="error">
+                                    {errors.name && touched.name && errors.name}
+                                </p>
+                            </div>
+                        </div>
+
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                             <div className="mt-2">

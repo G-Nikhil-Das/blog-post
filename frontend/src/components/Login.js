@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Creating schema
 const loginschema = Yup.object().shape({
@@ -15,8 +15,24 @@ const loginschema = Yup.object().shape({
 
 const Login = () => {
 
-    const onSubmitHandler = (values) => {
-        console.log(values)
+    const navigate = useNavigate()
+
+    const onSubmitHandler = async (values) => {
+        const {email, password} = values
+        const response = await fetch('http://localhost:5000/user/login', {
+            method: 'POST',
+            body: JSON.stringify({email, password}),
+            headers: {'Content-Type':'application/json'}
+        })
+        if(response.ok) {
+            response.json().then(userInfo => {
+                // setUserInfo(userInfo);
+                console.log(userInfo)
+            });
+            navigate('/blog')
+        } else {
+            alert('Wrong Credentails')
+        }
     }
 
     return (
@@ -30,12 +46,12 @@ const Login = () => {
             }}
         >
             {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
             }) => (
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
