@@ -10,7 +10,7 @@ export const register = async (req,res)=> {
     try {
         const user = await User.findOneAndUpdate({email: email}, { $set: { password: bcrypt.hashSync(password, salt), name }})
         if(!user) {
-            const newUser = await User.create({name, email, password: bcrypt.hashSync(password, salt)});
+            const newUser = await User.create({name, email, password: bcrypt.hashSync(password, salt), blogs: []});
             res.json(newUser)
         } else {
             const user = await User.findOne({email: email})

@@ -24,7 +24,7 @@ const Register = () => {
     async function onSubmitHandler(values) {
         console.log(values)
         const {name, email, password} = values
-        console.log(JSON.stringify({name, email, password}))
+        // console.log(JSON.stringify({name, email, password}))
         const response = await fetch('http://localhost:5000/user/register', {
             method: 'POST',
             body: JSON.stringify({name, email, password}),
