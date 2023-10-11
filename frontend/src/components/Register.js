@@ -37,7 +37,7 @@ const Register = () => {
         // const response = await axios.post("http://localhost:5000/user/register",JSON.stringify({email, password}))
         // console.log(response)
         if(response.status === 200) {
-            navigate("/login")
+            navigate("/user/login")
         } else {
             alert('Registration failed.')
         }

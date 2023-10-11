@@ -9,12 +9,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Register from "./components/Register";
-// import { authActions } from "./store";
 function App() {
-  // const dispath = useDispatch();
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log(isLoggedIn);
 
   return (
     <>

@@ -30,6 +30,7 @@ export const login = async (req,res)=> {
         } else {
             const isValidUser = bcrypt.compareSync(password, user.password)
             if(isValidUser) {
+                // console.log(user.blogs)
                 jwt.sign({email,id:user._id}, secret, {}, (err,token) => {
                     if (err) throw err;
                     res.cookie('token', token).json({
