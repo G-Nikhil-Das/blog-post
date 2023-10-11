@@ -30,20 +30,36 @@ export const login = async (req,res)=> {
         } else {
             const isValidUser = bcrypt.compareSync(password, user.password)
             if(isValidUser) {
-                // res.json('OK')
                 jwt.sign({email,id:user._id}, secret, {}, (err,token) => {
                     if (err) throw err;
                     res.cookie('token', token).json({
                       id:user._id,
-                      email,
+                      name: user.name,
                     });
                 });
             } else {
                 res.status(400).json('Wrong Credentials')
             }
-            // res.json(user)
         }
     } catch(err) {
         res.status(400).json(err)
     }
+}
+
+export const profile = (req,res) => {
+    const {token} = req.cookies;
+    if(token) {
+        jwt.verify(token, secret, {}, (err,info) => {
+            if (err) throw err;
+            res.json(info);
+          });
+    }
+    else {
+        res.json('No session present')
+    }
+    
+}
+
+export const logout = (req,res) => {
+    res.cookie('token', '').json('ok');
 }

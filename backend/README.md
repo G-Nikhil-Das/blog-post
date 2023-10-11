@@ -27,3 +27,8 @@ JWT :
 https://www.npmjs.com/package/jsonwebtoken
 To install : 
 npm i jsonwebtoken
+
+cookie-parser :
+https://www.npmjs.com/package/cookie-parser
+To install :
+npm i cookie-parser

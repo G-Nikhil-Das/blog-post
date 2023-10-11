@@ -5,22 +5,17 @@ import BlogDetails from "./components/BlogDetails";
 import AddBlog from "./components/AddBlog";
 import Login from "./components/Login";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Register from "./components/Register";
 // import { authActions } from "./store";
 function App() {
   // const dispath = useDispatch();
 
-  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const isLoggedIn = false;
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   console.log(isLoggedIn);
-  // useEffect(() => {
-  //   if (localStorage.getItem("userId")) {
-  //     dispath(authActions.login());
-  //   }
-  // }, [dispath]);
+
   return (
     <>
       <header>
@@ -30,18 +25,19 @@ function App() {
         <Routes>
           {!isLoggedIn ? (
             <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/" element={<AllBlogs />} />
+              <Route path="/user/login" element={<Login />} />
+              <Route path="/user/register" element={<Register />} />
+              <Route path="/user/" element={<AllBlogs />} />
+              <Route path="/blog/blogs" element={<AllBlogs />} />
+              <Route path="/" element={<AllBlogs />} />{" "}
             </>
           ) : (
             <>
-              <Route path="/blogs" element={<AllBlogs />} />
-              <Route path="/blogs/add" element={<AddBlog />} />
-              <Route path="/myBlogs" element={<MyBlogs />} />
-              <Route path="/myBlogs/:id" element={<BlogDetails />} />
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} /> */}
+              <Route path="/blog/blogs" element={<AllBlogs />} />
+              <Route path="/blog/blogs/add" element={<AddBlog />} />
+              <Route path="/blog/myBlogs" element={<MyBlogs />} />
+              <Route path="/blog/myBlogs/:id" element={<BlogDetails />} />
+              <Route path="/user/login" element={<Login />} />
               <Route path="/" element={<AllBlogs />} />{" "}
             </>
           )}

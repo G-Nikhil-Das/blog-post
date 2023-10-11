@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppBar, Typography, Toolbar, Box, Button, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-// import { authActions } from "../store";
-// import { useStyles } from "./utils";
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, setUserInfo } from '../store/authSlice'
+
 const Header = () => {
-//   const classes = useStyles();
-  // const dispath = useDispatch();
-  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const [value, setValue] = useState(0);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/user/profile', {
+      credentials: 'include',
+    }).then(response => {
+      response.json().then(userInfo => {
+        // setUserInfo(userInfo);
+        console.log(userInfo)
+        dispatch(setUserInfo({userInfo}))
+      });
+    }).catch(err => {
+      console.log(err)
+    });
+  }, []);
 
   return (
     <AppBar
@@ -30,7 +42,7 @@ const Header = () => {
               <Tab
                 className="font-sans text-slate-950"
                 LinkComponent={Link}
-                to="/blogs"
+                to="/blog/blogs"
                 label="All Blogs"
               />
               {isLoggedIn && (
@@ -38,7 +50,7 @@ const Header = () => {
                   // disabled={isLoggedIn? false : true}
                   className="font-sans text-slate-950"
                   LinkComponent={Link}
-                  to="/myBlogs"
+                  to="/blog/myBlogs"
                   label="My Blogs"
                 />
               )}
@@ -47,7 +59,7 @@ const Header = () => {
                   // disabled={isLoggedIn? false : true}
                   className="font-sans text-slate-950"
                   LinkComponent={Link}
-                  to="/blogs/add"
+                  to="/blog/blogs/add"
                   label="Add Blog"
                 />
                 )}
@@ -58,9 +70,9 @@ const Header = () => {
             <>
               {" "}
               <Button
-                onClick={()=>{setIsLoggedIn(true)}} //Mock line
+                onClick={()=>{}}
                 LinkComponent={Link}
-                to="/login"
+                to="/user/login"
                 variant="contained"
                 sx={{ margin: 1, borderRadius: 10 }}
                 className="bg-neutral-950"
@@ -68,9 +80,9 @@ const Header = () => {
                 Login
               </Button>
               <Button
-                onClick={()=>{setIsLoggedIn(true)}} //Mock line
+                onClick={()=>{}}
                 LinkComponent={Link}
-                to="/register"
+                to="/user/register"
                 variant="contained"
                 sx={{ margin: 1, borderRadius: 10 }}
                 className="bg-neutral-950"
@@ -81,11 +93,16 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <Button
-              // onClick={() => dispath(authActions.logout())}
-              onClick={()=>{setIsLoggedIn(false)}} //Mock line
+              onClick={() => {
+                setValue(0)
+                dispatch(logout())
+                fetch('http://localhost:5000/user/logout', {
+                  credentials: 'include',
+                  method: 'POST',
+                });
+              }}
               LinkComponent={Link}
-              // to="/login"
-              to="/blogs" //mock line
+              to="/blog/blogs"
               variant="contained"
               className="bg-neutral-950"
               sx={{ margin: 1, borderRadius: 10 }}

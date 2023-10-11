@@ -2,6 +2,8 @@ import React from 'react'
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { login, setUserInfo } from '../store/authSlice'
 
 // Creating schema
 const loginschema = Yup.object().shape({
@@ -16,6 +18,7 @@ const loginschema = Yup.object().shape({
 const Login = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const onSubmitHandler = async (values) => {
         const {email, password} = values
@@ -26,10 +29,10 @@ const Login = () => {
         })
         if(response.ok) {
             response.json().then(userInfo => {
-                // setUserInfo(userInfo);
-                console.log(userInfo)
+                dispatch(setUserInfo({userInfo}))
             });
-            navigate('/blog')
+            dispatch(login())
+            navigate('/blog/blogs')
         } else {
             alert('Wrong Credentails')
         }

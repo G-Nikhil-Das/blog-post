@@ -105,3 +105,8 @@ Axios :
 https://www.npmjs.com/package/axios
 To install : 
 npm i axios
+
+React-Redux :
+https://react-redux.js.org/tutorials/quick-start
+To install :
+npm install @reduxjs/toolkit react-redux
