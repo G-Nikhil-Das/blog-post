@@ -25,14 +25,16 @@ const Login = () => {
         const response = await fetch('http://localhost:5000/user/login', {
             method: 'POST',
             body: JSON.stringify({email, password}),
-            headers: {'Content-Type':'application/json'}
+            headers: {'Content-Type':'application/json'},
+            credentials: 'include',
         })
+        console.log(response.headers.getSetCookie())
         if(response.ok) {
             response.json().then(userInfo => {
                 dispatch(setUserInfo({userInfo}))
             });
             dispatch(login())
-            navigate('/blog/blogs')
+            navigate('/')
         } else {
             alert('Wrong Credentails')
         }

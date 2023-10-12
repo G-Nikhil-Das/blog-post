@@ -49,6 +49,7 @@ export const login = async (req,res)=> {
 
 export const profile = (req,res) => {
     const {token} = req.cookies;
+    // console.log(req.cookies)
     if(token) {
         jwt.verify(token, secret, {}, (err,info) => {
             if (err) throw err;

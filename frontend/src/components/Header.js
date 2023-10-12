@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { AppBar, Typography, Toolbar, Box, Button, Tabs, Tab } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import { logout, setUserInfo } from '../store/authSlice'
+import { login, logout, setUserInfo } from '../store/authSlice'
 
 const Header = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+  const navigate = useNavigate()
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -15,13 +15,15 @@ const Header = () => {
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
-        // setUserInfo(userInfo);
-        console.log(userInfo)
         dispatch(setUserInfo({userInfo}))
+        if(userInfo && userInfo.id) {
+          dispatch(login())
+        }
       });
     }).catch(err => {
       console.log(err)
     });
+    navigate('/')
   }, []);
 
   return (
@@ -96,13 +98,14 @@ const Header = () => {
               onClick={() => {
                 setValue(0)
                 dispatch(logout())
+                dispatch(setUserInfo({}))
                 fetch('http://localhost:5000/user/logout', {
                   credentials: 'include',
                   method: 'POST',
                 });
               }}
               LinkComponent={Link}
-              to="/blog/blogs"
+              to="/"
               variant="contained"
               className="bg-neutral-950"
               sx={{ margin: 1, borderRadius: 10 }}
