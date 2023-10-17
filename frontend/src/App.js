@@ -25,13 +25,13 @@ function App() {
               <Route path="/user/login" element={<Login />} />
               <Route path="/user/register" element={<Register />} />
               <Route path="/user/" element={<AllBlogs />} />
-              <Route path="/blog/blogs" element={<AllBlogs />} />
+              <Route path="/blog/getPosts" element={<AllBlogs />} />
               <Route path="/" element={<AllBlogs />} />{" "}
             </>
           ) : (
             <>
-              <Route path="/blog/blogs" element={<AllBlogs />} />
-              <Route path="/blog/blogs/add" element={<AddBlog />} />
+              <Route path="/blog/getPosts" element={<AllBlogs />} />
+              <Route path="/blog/add" element={<AddBlog />} />
               <Route path="/blog/myBlogs" element={<MyBlogs />} />
               <Route path="/blog/myBlogs/:id" element={<BlogDetails />} />
               <Route path="/user/login" element={<Login />} />

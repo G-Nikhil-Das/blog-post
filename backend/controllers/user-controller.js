@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 const salt = bcrypt.genSaltSync(10);
-const secret = bcrypt.genSaltSync(10);
+const secret = 'asqwerdfcvzx12qwaszxerdfcv';
 
 export const register = async (req,res)=> {
     const {name, email, password} = req.body;

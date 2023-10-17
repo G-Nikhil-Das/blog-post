@@ -1,17 +1,31 @@
 import React, { useState } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/solid'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setValue } from '../store/authSlice'
 
 const AddBlog = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [file, setFile] = useState('')
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
     const data = new FormData();
     data.set('title', title);
     data.set('description', description);
     data.set('file', file[0]);
-    console.log(file[0])
+    e.preventDefault();
+    const response = await fetch('http://localhost:5000/blog/post', {
+      method: 'POST',
+      body: data,
+      credentials: 'include',
+    })
+    // console.log(await response.json())
+    if (response.ok) {
+      dispatch(setValue({value: 0}))
+      navigate('/blog/getPosts')
+    }
   }
   return (
     <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-8 lg:px-8">

@@ -110,3 +110,8 @@ React-Redux :
 https://react-redux.js.org/tutorials/quick-start
 To install :
 npm install @reduxjs/toolkit react-redux
+
+date-fns :
+https://www.npmjs.com/package/date-fns
+To install :
+npm i date-fns

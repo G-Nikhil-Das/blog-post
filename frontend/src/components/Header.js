@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { AppBar, Typography, Toolbar, Box, Button, Tabs, Tab } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import { login, logout, setUserInfo } from '../store/authSlice'
+import { login, logout, setUserInfo, setValue } from '../store/authSlice'
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [value, setValue] = useState(0);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const tabsValue = useSelector((state) => state.auth.value)
 
   useEffect(() => {
     fetch('http://localhost:5000/user/profile', {
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
-        dispatch(setUserInfo({userInfo}))
+        dispatch(setUserInfo(userInfo))
         if(userInfo && userInfo.id) {
           dispatch(login())
         }
@@ -38,13 +38,13 @@ const Header = () => {
        
           <Box display="flex" marginLeft={"auto"} marginRight="auto">
             <Tabs
-              value={isLoggedIn? value : 0}
-              onChange={(e, val) => setValue(val)}
+              value={isLoggedIn? tabsValue : 0}
+              onChange={(e, val) => dispatch(setValue({value: val}))}
             >
               <Tab
                 className="font-sans text-slate-950"
                 LinkComponent={Link}
-                to="/blog/blogs"
+                to="/blog/getPosts"
                 label="All Blogs"
               />
               {isLoggedIn && (
@@ -61,7 +61,7 @@ const Header = () => {
                   // disabled={isLoggedIn? false : true}
                   className="font-sans text-slate-950"
                   LinkComponent={Link}
-                  to="/blog/blogs/add"
+                  to="/blog/add"
                   label="Add Blog"
                 />
                 )}
@@ -96,7 +96,7 @@ const Header = () => {
           {isLoggedIn && (
             <Button
               onClick={() => {
-                setValue(0)
+                dispatch(setValue({value: 0}))
                 dispatch(logout())
                 dispatch(setUserInfo({}))
                 fetch('http://localhost:5000/user/logout', {

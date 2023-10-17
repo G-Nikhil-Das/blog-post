@@ -28,10 +28,10 @@ const Login = () => {
             headers: {'Content-Type':'application/json'},
             credentials: 'include',
         })
-        console.log(response.headers.getSetCookie())
+        // console.log(response.headers.getSetCookie())
         if(response.ok) {
             response.json().then(userInfo => {
-                dispatch(setUserInfo({userInfo}))
+                dispatch(setUserInfo(userInfo))
             });
             dispatch(login())
             navigate('/')

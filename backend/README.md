@@ -32,3 +32,8 @@ cookie-parser :
 https://www.npmjs.com/package/cookie-parser
 To install :
 npm i cookie-parser
+
+Multer : Primarily used for uploading files 
+https://www.npmjs.com/package/multer
+To install :
+npm i multer
