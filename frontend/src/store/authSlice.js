@@ -18,7 +18,6 @@ export const authSlice = createSlice({
         state.userInfo = action.payload
     },
     setValue: (state, action) => {
-        console.log(action)
         state.value = action.payload.value
     }
   },

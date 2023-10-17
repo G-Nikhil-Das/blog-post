@@ -9,6 +9,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Register from "./components/Register";
+import EditBlog from "./components/EditBlog";
 function App() {
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -26,6 +27,7 @@ function App() {
               <Route path="/user/register" element={<Register />} />
               <Route path="/user/" element={<AllBlogs />} />
               <Route path="/blog/getPosts" element={<AllBlogs />} />
+              <Route path="/blog/:id" element={<BlogDetails />} />
               <Route path="/" element={<AllBlogs />} />{" "}
             </>
           ) : (
@@ -33,7 +35,8 @@ function App() {
               <Route path="/blog/getPosts" element={<AllBlogs />} />
               <Route path="/blog/add" element={<AddBlog />} />
               <Route path="/blog/myBlogs" element={<MyBlogs />} />
-              <Route path="/blog/myBlogs/:id" element={<BlogDetails />} />
+              <Route path="/blog/edit/:id" element={<EditBlog />} />
+              <Route path="/blog/:id" element={<BlogDetails />} />
               <Route path="/user/login" element={<Login />} />
               <Route path="/" element={<AllBlogs />} />{" "}
             </>

@@ -4,9 +4,14 @@ import jwt from 'jsonwebtoken'
 const secret = 'asqwerdfcvzx12qwaszxerdfcv';
 
 export const getBlog = async (req,res) => {
-    // const {id} = req.params;
-    // const blogRecord = await Blog.findById(id).populate('author', ['email']);
-    // res.json(blogRecord);
+    const {id} = req.params;
+    let blogRecord
+    try {
+        blogRecord = await Blog.findById(id).populate('author', ['name']);
+    } catch (error) {
+        console.log(error)
+    }
+    res.json(blogRecord);
 }
 
 export const getAllPosts = async(req,res) => {
@@ -40,17 +45,39 @@ export const postBlog = async (req,res) => {
     const parts = originalname.split('.');
     const newPath = path+'.'+parts[parts.length - 1];
     fs.renameSync(path, newPath);
-    // res.json(res.json({files: req.file}));
     const {token} = req.cookies;
     jwt.verify(token, secret, {}, async (err,info) => {
         if (err) throw err;
         const {title,description} = req.body;
-        const postDoc = await Blog.create({
+        const post = await Blog.create({
             title,
             description,
             cover:newPath,
             author:info.id,
         });
-        res.json(postDoc);
+        res.json(post);
+    });
+}
+
+export const editBlog = async (req,res) => {
+    let newPath = null;
+    if (req.file) {
+        const {originalname,path} = req.file;
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
+        newPath = path+'.'+ext;
+        fs.renameSync(path, newPath);
+      }
+    const {token} = req.cookies;
+    jwt.verify(token, secret, {}, async (err,info) => {
+        if (err) throw err;
+        const {id,title,description} = req.body;
+        const blog = await Blog.findOne({_id:id})
+        const isAuthor = JSON.stringify(blog.author) === JSON.stringify(info.id);
+        if (!isAuthor) {
+            return res.status(400).json('you are not the author');
+        }
+        const post = await Blog.findOneAndUpdate({_id: id}, { $set: {title, description, cover: newPath}})
+        res.json(post);
     });
 }
