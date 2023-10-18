@@ -22,12 +22,11 @@ const AllBlogs = () => {
             <div className="flex items-center gap-x-4 text-xs">
               <time className="text-gray-500">{format(new Date(post.createdAt), 'MMM d, yyyy HH:mm')}</time>
             </div>
-            <div className="group relative pt-3">
-            <img src={'http://localhost:5000/'+post.cover} alt=""/>
+            <div className="group overflow-hidden flex h-24 w-full sm:h-40 relative pt-3">
+              <img src={'http://localhost:5000/'+post.cover} alt="" className="object-cover object-center w-full"/>
             </div>
             <div className="group relative">
               <h3 className="mt-3 line-clamp-2 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                <span className="absolute inset-0"></span>
                 {post.title}
               </h3>
               <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>

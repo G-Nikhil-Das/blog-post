@@ -9,6 +9,7 @@ const Header = () => {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const tabsValue = useSelector((state) => state.auth.value)
+  const user = useSelector((state) => state.auth.userInfo)
 
   useEffect(() => {
     fetch('http://localhost:5000/user/profile', {
@@ -94,24 +95,27 @@ const Header = () => {
             </>
           )}
           {isLoggedIn && (
-            <Button
-              onClick={() => {
-                dispatch(setValue({value: 0}))
-                dispatch(logout())
-                dispatch(setUserInfo({}))
-                fetch('http://localhost:5000/user/logout', {
-                  credentials: 'include',
-                  method: 'POST',
-                });
-              }}
-              LinkComponent={Link}
-              to="/"
-              variant="contained"
-              className="bg-neutral-950"
-              sx={{ margin: 1, borderRadius: 10 }}
-            >
-              Logout
-            </Button>
+            <>
+              <span className="font-sans text-slate-950 flex items-center">{user.name}</span>
+              <Button
+                onClick={() => {
+                  dispatch(setValue({value: 0}))
+                  dispatch(logout())
+                  dispatch(setUserInfo({}))
+                  fetch('http://localhost:5000/user/logout', {
+                    credentials: 'include',
+                    method: 'POST',
+                  });
+                }}
+                LinkComponent={Link}
+                to="/"
+                variant="contained"
+                className="bg-neutral-950"
+                sx={{ margin: 1, borderRadius: 10 }}
+              >
+                Logout
+              </Button>
+            </>
           )}
         </Box>
       </Toolbar>

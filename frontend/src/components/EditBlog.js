@@ -19,8 +19,6 @@ const EditBlog = () => {
         response.json().then(post => {
           setTitle(post.title);
           setDescription(post.description);
-        //   const file = post.cover.split('\\')
-        //   setFileName(file[1])
         setFileName(post.cover)
         });
       });
@@ -40,7 +38,6 @@ const EditBlog = () => {
       body: data,
       credentials: 'include',
     })
-    // console.log(await response.json())
     if (response.ok) {
       dispatch(setValue({value: 0}))
       navigate('/blog/'+id)
@@ -104,7 +101,6 @@ const EditBlog = () => {
                             <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e)=>setFile(e.currentTarget.files)} />
                         </label>
                       </div>
-                      {/* <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p> */}
                     </div>
                   </div>
                 </div>

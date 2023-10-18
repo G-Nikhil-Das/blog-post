@@ -21,7 +21,6 @@ const AddBlog = () => {
       body: data,
       credentials: 'include',
     })
-    // console.log(await response.json())
     if (response.ok) {
       dispatch(setValue({value: 0}))
       navigate('/blog/getPosts')

@@ -30,7 +30,6 @@ export const login = async (req,res)=> {
         } else {
             const isValidUser = bcrypt.compareSync(password, user.password)
             if(isValidUser) {
-                // console.log(user.blogs)
                 jwt.sign({email,id:user._id}, secret, {}, (err,token) => {
                     if (err) throw err;
                     res.cookie('token', token).json({
@@ -49,10 +48,11 @@ export const login = async (req,res)=> {
 
 export const profile = (req,res) => {
     const {token} = req.cookies;
-    // console.log(req.cookies)
     if(token) {
-        jwt.verify(token, secret, {}, (err,info) => {
+        jwt.verify(token, secret, {}, async(err,info) => {
             if (err) throw err;
+            const user = await User.findOne({_id: info.id})
+            info.name = user.name
             res.json(info);
           });
     }
